@@ -130,7 +130,7 @@ public class forma1 {
             while(p!=registro)
             {
                 sum=sum+p.getDato();
-                p=p.getLf();
+                p=p.getLc();
             }
             System.out.println("La suma de la columna "+cont+" es:"+ sum);
             cont++;
