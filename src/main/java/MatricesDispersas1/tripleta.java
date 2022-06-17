@@ -295,5 +295,22 @@ public class tripleta {
             k = 1;
         }
         System.out.println("El promedio de la columna " + Mcol + " es: " + MProm);
+    }//Fin promedio
+    public void sumaTripletas(tripleta a, tripleta b)
+    {
+        
+        int i=1, j=1, k=1;
+        while(i>j)
+        {
+            if(a.getTri(i,0)==b.getTri(j, 0)&&a.getTri(i, 1)==b.getTri(j, 1))
+            {
+                this.setTri(k, 0, a.getTri(i, 0));
+                this.setTri(k, 1, a.getTri(j, 1));
+                this.setTri(k, 2, a.getTri(i, 2)+b.getTri(j, 2));
+                i++;
+                j++;
+                k++;
+            }
+        }
     }
 }//Fin class
