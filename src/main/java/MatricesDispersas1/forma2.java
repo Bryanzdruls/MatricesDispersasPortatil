@@ -90,8 +90,7 @@ public class forma2 {
     public void sumaColumnas(Nodo head)
     {
         Nodo p=this.head.getLc();
-        int aux=0, sum=0;
-        
+        int aux=0, sum=0;       
         while(aux < this.head.getCol())
         {
             p=this.head.getLc();
@@ -124,4 +123,151 @@ public class forma2 {
         }
         return this.head;
     }
-}
+    
+    public Nodo sumaForma2(Nodo head, Nodo head2)
+    {
+        Nodo p=head.getLf(), q=head2.getLf(),a;
+        Nodo primero=new Nodo();
+        
+        a=primero;
+
+        while(p!=head && q!=head2)
+        {
+            Nodo x = new Nodo();
+            head=x;
+            if(p.getFila()==q.getFila() && p.getCol()==q.getCol())
+            {
+                a.setLf(x);
+                a=x;
+                x.setDato(p.getDato()+q.getDato());
+                x.setFila(p.getFila());
+                x.setCol(p.getCol());
+                p=p.getLf();
+                q=q.getLf();
+            }
+            else
+            {
+                if(p.getFila()<=q.getFila())
+                {
+                    if (p.getFila()==q.getFila()&& p.getCol()<=q.getCol()) {
+                        a.setLf(x);
+                        a=x;
+                        x.setDato(p.getDato());
+                        p=p.getLf();
+                    }
+                    else
+                    {
+                        if(p.getFila()<q.getFila())
+                        {
+                            a.setLf(x);
+                            a=x;
+                            x.setDato(p.getDato());
+                            p=p.getLf();
+                        }
+                    }//Fin else                  
+                }//Fin if
+                else
+                {
+                    a.setLf(x);
+                    a=x;
+                    x.setDato(q.getDato()); 
+                    q=q.getLf();
+                }//Fin else
+            }//Fin else         
+        }
+//        if(p!=head)
+//        {
+//            while(p!=head)
+//            {
+//                a.setLf(x);
+//                a=x;
+//                p=p.getLf();
+//            }
+//        }
+//        else
+//        {
+//            if(q!=head2)
+//            {
+//                //pasar los datos a la nueva
+//            }
+//        }
+        head.setLf(primero);
+        //ligar por columnas
+        return primero;
+    }//fin
+    public void borrarDato(int dato)
+    {
+        int encontro=0;
+        Nodo p= new Nodo(), af=null, ac=null;
+        p=this.getHead();
+        af=getHead();
+        ac=getHead();
+        p=p.getLf();
+        do
+        {
+            if(p.getDato()==dato)
+            {
+                af.setLf(p.getLf());
+                ac.setLc(p.getLc());
+                p=af;
+                encontro=1;
+            }
+            af=af.getLf();
+            ac=ac.getLc();
+            p=p.getLf();
+        }while(p!=this.getHead());
+        if(encontro ==1)
+        {
+            System.out.println("El dato fue eliminado correctamente");
+        }
+        else
+        {
+            System.out.println("No se encontro el dato");
+        }
+    }//FIn borrar
+    
+    public void borrarDato(int f,int c)
+    {
+        int encontro=0;
+        Nodo p= new Nodo(), af=null, ac=null;
+        p=this.getHead();
+        af=getHead();
+        ac=getHead();
+        p=p.getLf();
+        do
+        {
+            if(p.getFila()==f && p.getCol()==c)
+            {
+                af.setLf(p.getLf());
+                ac.setLc(p.getLc());
+                p=af;
+                encontro=1;
+            }
+            af=af.getLf();
+            ac=ac.getLc();
+            p=p.getLf();
+        }while(p!=this.getHead());
+        if(encontro ==1)
+        {
+            System.out.println("El dato fue eliminado correctamente");
+        }
+        else
+        {
+            System.out.println("No se encontro el dato");
+        }
+    }//Fin borrar
+    //Fin borradores
+    public void mostrar()
+    {
+        Nodo p = new Nodo();
+        p=this.getHead();
+        System.out.print("Rc:");
+        do
+        {
+            //System.out.print("La liga fila: "+p.getLf());
+            System.out.print("|"+p.getDato()+"|->");
+            p=p.getLf();
+        }while(p!=this.getHead());
+        System.out.println("");
+    }
+}//Fin class
