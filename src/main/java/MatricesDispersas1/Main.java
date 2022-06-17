@@ -14,8 +14,9 @@ public class Main {
         forma1 matForma1;
         forma2 matForma2;
         forma2 matForma2_1;
+        forma2 forma2Suma = new forma2();
         int opc= 0, opt=0;//Variable de opcion       
-        int mat[][]=new int[3][3], sw=0,Dif0=0, swTri=0;//Matriz definida, tamaño y otros
+        int mat[][]=new int[3][3], sw=0,Dif0=0, swTri=0, swF1=0, swF2=0;//Matriz definida, tamaño y otros
         int n = mat.length, m = mat[0].length; //NxM se definen
         int fila, columna, dato;
         Dif0=Matriz(mat,n,m, sw,Dif0);//Llamado al metodo de la matriz dispersa
@@ -33,7 +34,7 @@ public class Main {
                         swTri=1;
                         Dif0=0;
                     }            
-                    switch (opt) {
+                    switch (opc) {
                         case 1://Suma de filas.
                             System.out.println("Suma de filas:");
                             t1.sumaFilas();//Funciona
@@ -54,11 +55,13 @@ public class Main {
                         case 6://Mayor promedio col
                             t1.mayorPromCol();
                             break;
-                        case 7:
-                            
+                        case 7:           //SUma tripleta
+                            t2=t1;
+                            t3 = new tripleta(t1.getTri(0, 2)+1);
+                            t3.sumaTripletas(t1, t2);
+                            t3.mostrar();
                             break;
-                        case 8:
-                            
+                        case 8:                            
                             break;
                         case 9://Mostrar
                             if(t1.getTri(0,2)!= 0)
@@ -71,39 +74,143 @@ public class Main {
                                 JOptionPane.showMessageDialog(null, "La tripleta esta vacia");
                             }
                             break;
-                        case 10:
-                            
+                        case 10:                           
                             break;
                         default:
                             JOptionPane.showMessageDialog(null,"La opcion ingresada es incorrecta, por favor ingrese otra opcion");
                             break;
                     }                    
                     opc=0;
-                    break;
-                    
+                    break;                    
                 case 2://forma1
-                    matForma1.head=matForma1.convertirForma1(mat, n, m);
-                    matForma1.sumaFilas(matForma1.head);
-                    matForma1.sumaColumnas(matForma1.head);
+                    opt=menuF1();
+                    if(swF1==0)
+                    {                                             
+                        matForma1.convertirForma1(mat, n,m);//Funciona  
+                        swF1=1;
+                        Dif0=0;
+                    }     
+                    switch (opt) {
+                        case 1://Suma de filas.
+                            matForma1.sumaFilas(matForma1.head);
+                            break;
+                        case 2://Suma de columnas.   
+                            matForma1.sumaColumnas(matForma1.head);
+                            break;
+                        case 3://Insertar Dato  
+                            
+                            break;
+                        case 4://Eliminar Dato  
+                            int eleccion= Integer.parseInt(JOptionPane.showInputDialog("Ingrese el metodo que desea Usar.\n"
+                                    + "1.Dato\n"
+                                    + "2.Posicion\n"));
+                            if(eleccion ==1)
+                            {
+                                int datof1=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el dato que desea eliminar."));
+                                matForma1.borrarDato(datof1);
+                            }
+                            else
+                            {
+                                int filaEliminarf2=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la fila"));
+                                int columnaEliminarF2=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la columna"));
+                                if(filaEliminarf2<=n &&columnaEliminarF2<=m)
+                                {
+                                    matForma2.borrarDato(filaEliminarf2, columnaEliminarF2);
+                                }
+                                else
+                                {
+                                    JOptionPane.showMessageDialog(null, "No valido.");
+                                }
+                            }
+                            break;
+                        case 5://Mostrar  
+                            matForma1.mostrar();
+                            break;
+                        case 6://Sumar                          
+                            break;
+                        case 7://
+                            break;
+                        default:
+                            throw new AssertionError();
+                    }
+                    opt=0;                   
                     break;
-                case 3://forma2
-                    matForma2.convertirForma2(mat, n, m, m);
-                    matForma2.sumaFilas(matForma2.head);
-                    matForma2.sumaColumnas(matForma2.head);
-                    fila=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la Fila: "));
-                    columna=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la Columna: "));
-                    dato=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el dato: "));
-                    matForma2.head=matForma2.insertar(fila, columna, dato);
-                    opc=menu();
+                case 3://forma2 
+                    opt=menuF2();
+                    if(swF2==0)
+                    {                                             
+                        matForma2.convertirForma2(mat, n, m, m);
+                        swF2=1;
+                        Dif0=0;
+                    }     
+                    switch (opt) {
+                        case 1://Suma de filas.
+                            matForma2.sumaFilas(matForma2.head);
+                            break;
+                        case 2://Suma de columnas.   
+                            matForma2.sumaColumnas(matForma2.head);
+                            break;
+                        case 3://Insertar Dato  
+                            fila=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la Fila: "));
+                            columna=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la Columna: "));
+                            dato=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el dato: "));
+                            matForma2.head=matForma2.insertar(fila, columna, dato);                           
+                            break;
+                        case 4://Eliminar Dato   
+                            int eleccion= Integer.parseInt(JOptionPane.showInputDialog("Ingrese el metodo que desea Usar.\n"
+                                    + "1.Dato\n"
+                                    + "2.Posicion\n"));
+                            if(eleccion ==1)
+                            {
+                                int datof2=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el dato que desea eliminar."));
+                                matForma2.borrarDato(datof2);
+                            }
+                            else
+                            {
+                                int filaEliminarf2=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la fila"));
+                                int columnaEliminarF2=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la columna"));
+                                if(filaEliminarf2<=n &&columnaEliminarF2<=m)
+                                {
+                                    matForma2.borrarDato(filaEliminarf2, columnaEliminarF2);
+                                }
+                                else
+                                {
+                                    JOptionPane.showMessageDialog(null, "No valido.");
+                                }
+                            }
+                            break;
+                        case 5://Mostrar   
+                            if (matForma2.getHead() == null) {
+                                JOptionPane.showMessageDialog(null, "No se pudo realizar.");
+                            }
+                            else
+                            {
+                                matForma2.mostrar();
+                            }
+                            break;
+
+                        case 6://Sumar  
+                            forma2Suma.setHead(forma2Suma.sumaForma2(matForma2.getHead(),matForma2.getHead()));
+                            forma2Suma.mostrar();
+                            break;
+                        case 7://salir
+                            break;
+                        default:
+                            throw new AssertionError();
+                    }
+                    opt=0;                                    
                     break;
                 case 4:
                     System.out.println("MATRIZ REHECHA");
                     Dif0=Matriz(mat,n,m, sw, Dif0);
                     t1= new tripleta(Dif0+1);
+                    matForma1 = new forma1();
+                    matForma2 = new forma2();
+                    swF1=0;
+                    swF2=0;
                     swTri=0;
                     break;
-                case 5:
-                    
+                case 5:                    
                     break;
                 default:
                     JOptionPane.showMessageDialog(null,"La opcion ingresada es incorrecta, por favor ingrese otra opcion");
@@ -131,7 +238,7 @@ public class Main {
         +"4. Eliminar dato\n"
         +"5. Mostrar mayor dato impar (Fila)\n"
         +"6. Mostrar la columna con mayor promedio\n"
-        +"7. Suma de diagonal Principal\n"
+        +"7. SUMA TRIPLETAS\n"
         +"8. Suma Diagonal secundaria\n"
         +"9. Mostrar tripleta\n"
         +"10.Volver\n"
@@ -139,32 +246,26 @@ public class Main {
     }
     public static int menuF1()
     {
-        return Integer.parseInt(JOptionPane.showInputDialog("---MENU TRIPLETA---\n"
+        return Integer.parseInt(JOptionPane.showInputDialog("---MENU FORMA1---\n"
         +"1. Suma de filas\n"
         +"2. Suma de Columnas\n"
         +"3. Insertar Dato \n"
         +"4. Eliminar dato\n"
-        +"5. Mostrar mayor dato impar (Fila)\n"
-        +"6. Mostrar la columna con mayor promedio\n"
-        +"7. Suma de diagonal Principal\n"
-        +"8. Suma Diagonal secundaria\n"
-        +"9. Mostrar tripleta\n"
-        +"10.Volver\n"
+        +"5. Mostrar Forma1\n"
+        +"5. Sumar Forma1\n"
+        +"6. Volver\n"
         +"Ingrese una opcion: "));
     }//Fin menu f1
     public static int menuF2()
     {
-        return Integer.parseInt(JOptionPane.showInputDialog("---MENU TRIPLETA---\n"
+        return Integer.parseInt(JOptionPane.showInputDialog("---MENU fORMA2---\n"
         +"1. Suma de filas\n"
         +"2. Suma de Columnas\n"
         +"3. Insertar Dato \n"
         +"4. Eliminar dato\n"
-        +"5. Mostrar mayor dato impar (Fila)\n"
-        +"6. Mostrar la columna con mayor promedio\n"
-        +"7. Suma de diagonal Principal\n"
-        +"8. Suma Diagonal secundaria\n"
-        +"9. Mostrar tripleta\n"
-        +"10.Volver\n"
+        +"5. Mostrar Forma 2\n"
+        +"6. Sumar Forma2\n"
+        +"7. Volver\n"
         +"Ingrese una opcion: "));
     }//Fin menu F2
     public static int Matriz(int [][]mat,int n, int m, int sw, int dif0)
